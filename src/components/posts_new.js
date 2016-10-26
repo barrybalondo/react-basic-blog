@@ -1,7 +1,24 @@
+import _ from 'lodash';
 import React, { Component, PropTypes } from 'react';
 import { reduxForm } from 'redux-form';
 import { createPost } from '../actions/index';
 import { Link } from 'react-router';
+
+const FIELDS = {
+  title: {
+    type: 'input',
+    label: 'Title for Post'
+  },
+  categories: { 
+    type: 'input',
+    label: 'Enter some categories for this post'
+  },
+  content: { 
+    type: 'textarea',
+    label: 'Post Contents'
+  },  
+};
+// ['title', 'categories', 'content'];
 
 class PostsNew extends Component {
 
@@ -71,16 +88,9 @@ function validate(values) {
 
   const errors = {};
 
-  if(!values.title) {
-    errors.title = 'Enter a title';
-  }
-  if(!values.categories) {
-    errors.categories = 'Enter a categories';
-  }
-  if(!values.content) {
-    errors.content = 'Enter a content';
-  }
-
+  _.each(FIELDS, (type, field) => {
+    if(!values[field] = `Enter a ${field}`;
+  });
 
   return errors;
 
@@ -93,6 +103,6 @@ export default reduxForm({
   // this is where pass the configuration for redux form
   // what the form is called, sumbition, etc.
   form: 'PostsNewForm', // form name, doesn't need match
-  fields: ['title', 'categories', 'content'], // the feild that are being used.
+  fields: _.keys(FIELDS), // the feild that are being used.
   validate
 }, null, { createPost })(PostsNew);
